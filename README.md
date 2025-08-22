@@ -1,2 +1,2 @@
 # Cloudinary
-Image upload program
+A Simple Image upload project using Cloudinary
