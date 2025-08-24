@@ -52,10 +52,9 @@ Request:
 GET /ping
 ```
 Response:
-
+```http
 { "message": "API is running 🚀" }
-
-
+```
 ---
 
 2. Upload Single Image
@@ -70,14 +69,13 @@ Key: image (type: File)
 
 Value: select a file
 
-
+```http
 Response:
 
 {
   "url": "https://res.cloudinary.com/<cloud_name>/image/upload/.../file.jpg"
 }
-
-
+```
 ---
 
 3. Upload Multiple Images
@@ -91,7 +89,7 @@ Body (form-data):
 Key: images (type: File)
 
 Value: select multiple files (max 5 by default)
-
+```http
 
 Response:
 
@@ -101,7 +99,7 @@ Response:
     "https://res.cloudinary.com/<cloud_name>/image/upload/.../file2.jpg"
   ]
 }
-
+```
 
 ---
 
