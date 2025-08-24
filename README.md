@@ -1,7 +1,7 @@
 # Cloudinary
 A Simple Image upload project using Cloudinary 
 
- Cloudinary Image Upload API
+## Cloudinary Image Upload API
 
 A simple Node.js + Express API for uploading images to Cloudinary.
 Supports single and multiple file uploads and returns secure URLs for easy access.
@@ -9,7 +9,7 @@ Supports single and multiple file uploads and returns secure URLs for easy acces
 
 ---
 
-Setup
+## Setup
 
 1. Clone project & install dependencies
 
@@ -28,7 +28,7 @@ API_SECRET=your_api_secret
 👉 Get these from your Cloudinary Console.
 
 
-Running the Server
+## Running the Server
 
 Start the server with:
 
@@ -41,7 +41,7 @@ Expected output:
 
 ---
 
-API Endpoints
+## API Endpoints
 
 1. Health Check
 
@@ -103,7 +103,7 @@ Response:
 
 ---
 
-How It Works
+## How It Works
 
 1. Client Upload → Files sent via form-data.
 
@@ -122,7 +122,7 @@ How It Works
 
 ---
 
- Notes
+## Notes
 
 Uploaded files are stored under Cloudinary folder: my_uploads.
 
