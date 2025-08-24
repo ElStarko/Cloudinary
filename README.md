@@ -12,28 +12,30 @@ Supports single and multiple file uploads and returns secure URLs for easy acces
 ## Setup
 
 1. Clone project & install dependencies
-
+```bash
 git clone <your-repo-url>
 cd cloudinary-upload
 npm install
+```
+
 
 2. Configure environment
 
 Create a .env file in the root directory:
-
+```env
 CLOUD_NAME=your_cloud_name
 API_KEY=your_api_key
 API_SECRET=your_api_secret
-
+```
 👉 Get these from your Cloudinary Console.
 
 
 ## Running the Server
 
 Start the server with:
-
+```javascript
 node server.js
-
+```
 Expected output:
 
 🚀 Server running on http://localhost:3000
@@ -46,9 +48,9 @@ Expected output:
 1. Health Check
 
 Request:
-
+```http
 GET /ping
-
+```
 Response:
 
 { "message": "API is running 🚀" }
@@ -59,9 +61,9 @@ Response:
 2. Upload Single Image
 
 Request:
-
+```http
 POST /upload
-
+```
 Body (form-data):
 
 Key: image (type: File)
@@ -81,9 +83,9 @@ Response:
 3. Upload Multiple Images
 
 Request:
-
+```http
 POST /uploads
-
+```
 Body (form-data):
 
 Key: images (type: File)
