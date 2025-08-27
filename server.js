@@ -9,6 +9,15 @@ dotenv.config();
 const app = express();
 const upload = multer({ dest: "uploads/" });
 
+const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+
+// Serve frontend
+app.use(express.static("public"));
+
+
 require("dotenv").config();
 // --- 🔑 Startup Environment Check ---
 const requiredEnv = ["CLOUD_NAME", "API_KEY", "API_SECRET"];
@@ -41,6 +50,24 @@ app.get("/health", (req, res) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// Routes
+app.post("/upload-multiple", upload.array("images", 10), async (req, res) => {
+  try {
+    const results = [];
+    for (let file of req.files) {
+      const result = await cloudinary.uploader.upload(file.path, {
+        folder: "uploads",
+      });
+      results.push(result.secure_url);
+    }
+    res.json({ urls: results });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 // Health check
 app.get("/ping", (req, res) => {
