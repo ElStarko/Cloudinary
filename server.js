@@ -10,7 +10,6 @@ const app = express();
 const upload = multer({ dest: "uploads/" });
 
 require("dotenv").config();
-
 // --- 🔑 Startup Environment Check ---
 const requiredEnv = ["CLOUD_NAME", "API_KEY", "API_SECRET"];
 let missing = requiredEnv.filter((envVar) => !process.env[envVar]);
