@@ -1,103 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Cloudinary Image Upload</title>
+  <meta charset="UTF-8" />
+  <title>Cloudinary Uploader</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2rem;
-      background: #f9f9f9;
-    }
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-    }
-    h2 {
-      text-align: center;
-    }
-    input[type="file"] {
-      margin: 1rem 0;
-      display: block;
-    }
-    button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:disabled {
-      background: #ccc;
-    }
-    .result {
-      margin-top: 1rem;
-    }
-    .result img {
-      max-width: 100%;
-      margin-bottom: 10px;
-      border-radius: 8px;
-    }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .link-box { margin-top: 10px; padding: 10px; border: 1px solid #ddd; background: #f9f9f9; }
+    .link-box a { color: blue; text-decoration: underline; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Upload Images to Cloudinary</h2>
-    <form id="uploadForm">
-      <input type="file" id="fileInput" name="images" multiple />
-      <button type="submit">Upload</button>
-    </form>
-    <div id="result" class="result"></div>
-  </div>
+  <h2>Upload Files to Cloudinary</h2>
+
+  <form id="uploadForm">
+    <input type="file" name="files" id="files" multiple />
+    <button type="submit">Upload</button>
+  </form>
+
+  <h3>Uploaded Links</h3>
+  <div id="results"></div>
 
   <script>
     const form = document.getElementById("uploadForm");
-    const fileInput = document.getElementById("fileInput");
-    const resultDiv = document.getElementById("result");
-
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const files = fileInput.files;
-      if (!files.length) {
-        alert("Please select at least one image");
+      
+      const files = document.getElementById("files").files;
+      if (files.length === 0) {
+        alert("Please select at least one file!");
         return;
       }
 
       const formData = new FormData();
-      for (let i = 0; i < files.length; i++) {
-        formData.append("images", files[i]); // must match backend multer field name
+      for (let file of files) {
+        formData.append("images", file);
       }
 
-      try {
-        const res = await fetch("/upload-multiple", {
-          method: "POST",
-          body: formData,
-        });
-        const data = await res.json();
-        console.log("Response:", data);
+      const res = await fetch("/upload-multiple", {
+        method: "POST",
+        body: formData,
+      });
 
-        // Show uploaded images
-        if (data.urls) {
-          resultDiv.innerHTML = "";
-          data.urls.forEach(url => {
-            const img = document.createElement("img");
-            img.src = url;
-            resultDiv.appendChild(img);
-          });
-        } else {
-          resultDiv.innerHTML = `<p style="color:red">Upload failed: ${data.error || "Unknown error"}</p>`;
-        }
-      } catch (err) {
-        console.error(err);
-        resultDiv.innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
+      const data = await res.json();
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      if (data.urls) {
+        data.urls.forEach((url) => {
+          const linkBox = document.createElement("div");
+          linkBox.className = "link-box";
+          linkBox.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+          resultsDiv.appendChild(linkBox);
+        });
+      } else {
+        resultsDiv.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
       }
     });
   </script>
